@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Raw downloads and the cleaned dataset are rebuilt by the pipeline, never committed
+data/
+
+# Secrets
+.env
+*.env
