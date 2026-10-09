@@ -75,8 +75,18 @@ npm run build      # static site in web/out/
 
 ## Free hosting
 
-The site is plain static files, so it costs nothing to host.
-`.github/workflows/deploy.yml` rebuilds it from fresh DLD data every morning and deploys it:
+The site is plain static files, so it costs nothing to host. The computed data
+(`web/public/data`, about 12 MB of JSON) is committed, and `.github/workflows/deploy.yml`
+builds and publishes the site on every push to `main` that touches `web/`.
+
+data.dubai refuses downloads from GitHub's runners, so refresh the data from a machine in the
+UAE and push it:
+
+```bash
+uv run dre fetch transactions rent_contracts projects developers areas
+uv run dre import-history && uv run dre update && uv run dre rents && uv run dre site
+git add web/public/data && git commit -m "Refresh data" && git push
+```
 
 1. **GitHub Pages (default, no setup):** in the repository go to *Settings → Pages* and set
    *Source* to **GitHub Actions**. Then run the *Build and deploy* workflow once. The site
